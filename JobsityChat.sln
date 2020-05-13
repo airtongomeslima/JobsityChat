@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29721.120
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.Presentation", "JobsityChat.Presentation\JobsityChat.Presentation.csproj", "{1A6F49BD-7951-4E16-B0DB-0C826CBF58D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChat.Presentation", "JobsityChat.Presentation\JobsityChat.Presentation.csproj", "{1A6F49BD-7951-4E16-B0DB-0C826CBF58D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.Data", "JobsityChat.Data\JobsityChat.Data.csproj", "{234FBFF8-A355-4344-9781-F89D2B533E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChat.Data", "JobsityChat.Data\JobsityChat.Data.csproj", "{234FBFF8-A355-4344-9781-F89D2B533E8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.Domain", "JobsityChat.Domain\JobsityChat.Domain.csproj", "{0A9ED25C-ADAA-49FC-A605-774EAFF51B09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChat.Domain", "JobsityChat.Domain\JobsityChat.Domain.csproj", "{0A9ED25C-ADAA-49FC-A605-774EAFF51B09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.Test", "JobsityChat.Test\JobsityChat.Test.csproj", "{6290AE2E-4313-42B8-9038-8F948923EC5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChat.Test", "JobsityChat.Test\JobsityChat.Test.csproj", "{6290AE2E-4313-42B8-9038-8F948923EC5E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.Service", "JobsityChat.Service\JobsityChat.Service.csproj", "{85104D19-CA29-4C97-90CB-6E5E4D068CD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JobsityChat", "JobsityChat", "{2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JobsityAuthentication", "JobsityAuthentication", "{CDC0B604-ABF9-474A-AC55-DA09B9BB1CF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A6F49BD-7951-4E16-B0DB-0C826CBF58D5} = {2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}
+		{234FBFF8-A355-4344-9781-F89D2B533E8B} = {2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}
+		{0A9ED25C-ADAA-49FC-A605-774EAFF51B09} = {2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}
+		{6290AE2E-4313-42B8-9038-8F948923EC5E} = {2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}
+		{85104D19-CA29-4C97-90CB-6E5E4D068CD9} = {2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE94DDBB-CB31-4074-8D86-4528201B847C}
