@@ -56,5 +56,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JobsityChat.Data\JobsityChat.Data.csproj">
+      <Project>{234fbff8-a355-4344-9781-f89d2b533e8b}</Project>
+      <Name>JobsityChat.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
