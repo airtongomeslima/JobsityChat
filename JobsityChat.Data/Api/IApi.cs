@@ -1,13 +1,13 @@
-﻿using JobsityChat.Data.Entities;
+﻿using JobsityChat.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JobsityChat.Data.Api
+namespace JobsityChat.Domain.Api
 {
     public interface IApi
     {
-        IEnumerable<ChatRoom> GetChatRoomsData();
-        IEnumerable<Message> GetChatRoomData(int chatRoomId);
+        IEnumerable<ChatRoom> GetChatRooms();
+        IEnumerable<Message> GetChatRoomMessageBoard(int chatRoomId);
     }
 }

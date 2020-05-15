@@ -1,11 +1,11 @@
-﻿using JobsityChat.Data.Entities;
+﻿using JobsityChat.Domain.Entities;
 using JobsityChat.Domain.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JobsityChat.Data.Mappers
+namespace JobsityChat.Domain.Mappers
 {
     public class ChatRoomMessageEntityMapper : IMapper<IEnumerable<Message>, IEnumerable<ChatRoomMessageEntity>>
     {
