@@ -1,5 +1,11 @@
 ﻿This is a simple windows service who have the task to watch the RabbitMQ for new Quote requests.
 
-To start this please execute the PublishService.bat as administrator.
+In case you don't have a rabbitMQ to test, try using the Docker version by using this command:
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+Change the credentials and address in App.Config
+
+To start this please build the project then inside the bin/debug folder execute the removeservice.bat (just in case) 
+then execute the installservice.bat.
 
 If you want to debug this project, please execute the visual studio as administrator, install the service then attach.

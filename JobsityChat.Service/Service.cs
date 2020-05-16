@@ -1,8 +1,10 @@
-﻿using RabbitMQ.Client;
+﻿using JobsityChat.MessageBroker;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
@@ -18,10 +20,7 @@ namespace JobsityChat.Service
 {
     public partial class Service : ServiceBase
     {
-        private static ConnectionFactory _factory;
-        private static IConnection _connection;
-        private static IModel _channel;
-        private static string eventSource = "JobsityChatService";
+        private static IMessageBroker messageBroker;
         public Service()
         {
             InitializeComponent();
@@ -29,55 +28,35 @@ namespace JobsityChat.Service
 
         protected override void OnStart(string[] args)
         {
+            var port = ConfigurationManager.AppSettings["RabbitMQPort"];
+            var hostName = ConfigurationManager.AppSettings["RabbitMQAddress"];
+            var userName = ConfigurationManager.AppSettings["RabbitMQUserName"];
+            var password = ConfigurationManager.AppSettings["RabbitMQPassword"];
 
+
+            messageBroker = new MessageBroker.MessageBroker(hostName, port, userName, password);
             Task.Run(() =>
             {
-
                 try
                 {
-                    _factory = new ConnectionFactory()
-                    {
-                        HostName = "192.168.0.117",
-                        Port = 5672,
-                        UserName = "guest",
-                        Password = "guest"
-                    };
-                    _connection = _factory.CreateConnection();
-                    _channel = _connection.CreateModel();
-                    _channel.ExchangeDeclare(exchange: "JobsityChatService",
-                                                type: "direct");
-                    var queueName = _channel.QueueDeclare().QueueName;
-
-                    _channel.QueueBind(queue: queueName,
-                                          exchange: "JobsityChatService",
-                                          routingKey: "quote");
-
-
-                    var consumer = new EventingBasicConsumer(_channel);
-
-                    consumer.Received += (model, ea) =>
-                    {
-                        var body = ea.Body;
-                        var message = Encoding.UTF8.GetString(body.ToArray());
-                        var routingKey = ea.RoutingKey;
-                        var result = GetQuotes(message);
-                        foreach (var item in result)
+                    messageBroker.Subscribe(
+                        "JobsityChatService",
+                        "quote",
+                        (string message) =>
                         {
-                            var text = $"{item.Symbol.ToUpper()} quote is ${item.Close} per share";
-                            SendResponse(text);
-                        }
-                    };
-                    _channel.BasicConsume(queue: queueName,
-                                         autoAck: true,
-                                         consumer: consumer);
-
-
+                            var result = GetQuotes(message);
+                            foreach (var item in result)
+                            {
+                                var text = $"{item.Symbol.ToUpper()} quote is ${item.Close} per share";
+                                messageBroker.SendMessage("JobsityChatServiceQuotes", "quote", text);
+                            }
+                        });
 
                 }
                 catch (Exception e)
                 {
                     EventLog.WriteEntry(
-                        eventSource,
+                        "JobsityChat.Service",
                         e.Message,
                         EventLogEntryType.Error,
                         100
@@ -138,38 +117,10 @@ namespace JobsityChat.Service
             return result;
         }
 
-        static void SendResponse(string response)
-        {
-            var factory = new ConnectionFactory()
-            {
-                HostName = "192.168.0.117",
-                Port = 5672,
-                UserName = "guest",
-                Password = "guest"
-            };
-
-
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.ExchangeDeclare(exchange: "JobsityChatServiceQuotes",
-                                        type: "direct");
-
-                var body = Encoding.UTF8.GetBytes(response);
-                channel.BasicPublish(exchange: "JobsityChatServiceQuotes",
-                                     routingKey: "quote",
-                                     basicProperties: null,
-                                     body: body);
-            }
-        }
 
         protected override void OnStop()
         {
-
-            _channel.Close();
-            _connection.Close();
-            _channel.Dispose();
-            _connection.Dispose();
+            messageBroker.Dispose();
         }
     }
 }

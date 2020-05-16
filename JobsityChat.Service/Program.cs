@@ -11,7 +11,6 @@ namespace JobsityChat.Service
     {
         static void Main()
         {
-            System.IO.File.WriteAllText(@"C:\JobsityChat\servicebegin.txt", "step1");
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {

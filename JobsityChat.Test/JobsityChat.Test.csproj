@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\JobsityChat.Data\JobsityChat.Data.csproj" />
     <ProjectReference Include="..\JobsityChat.Domain\JobsityChat.Domain.csproj" />
+    <ProjectReference Include="..\JobsityChat.MessageBroker\JobsityChat.MessageBroker.csproj" />
   </ItemGroup>
 
   <ItemGroup>
