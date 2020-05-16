@@ -9,15 +9,13 @@ namespace JobsityChat.Service
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         static void Main()
         {
+            System.IO.File.WriteAllText(@"C:\JobsityChat\servicebegin.txt", "step1");
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new Service()
             };
             ServiceBase.Run(ServicesToRun);
         }
