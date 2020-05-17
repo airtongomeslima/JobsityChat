@@ -61,15 +61,15 @@ namespace JobsityChat.Data.Api
             return mapper.MapFrom(list);
         }
 
-        public async Task<IEnumerable<Message>> SendMessageAsync(int chatRoomId, string userId, string message)
+        public async Task<IEnumerable<Message>> SendMessageAsync(Message message)
         {
-            if (message.ToLower().Contains("/stock="))
+            if (message.Text.ToLower().Contains("/stock="))
             {
                 var pattern = @"(?<=\/stock=).*(?=>$|\s)";
 
                 Regex regex = new Regex(pattern);
 
-                Match match = regex.Match(message);
+                Match match = regex.Match(message.Text);
 
                 if (match.Success)
                 {
@@ -79,13 +79,13 @@ namespace JobsityChat.Data.Api
 
             await uow.ChatRoomMessageRepository.InsertAsync(new ChatRoomMessageEntity
             {
-                ChatRoomId = chatRoomId,
-                Message = message,
-                UserId = userId,
+                ChatRoomId = message.ChatRoomId,
+                Message = message.Text,
+                UserId = message.UserId,
                 PostDate = DateTime.Now
             });
 
-            return await GetChatRoomMessageBoardAsync(chatRoomId);
+            return await GetChatRoomMessageBoardAsync(message.ChatRoomId);
         }
     }
 }
