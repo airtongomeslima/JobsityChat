@@ -11,5 +11,6 @@ namespace JobsityChat.Domain.Api
         Task<IEnumerable<ChatRoom>> GetChatRooms();
         Task<IEnumerable<Message>> GetChatRoomMessageBoardAsync(int chatRoomId);
         Task<IEnumerable<Message>> SendMessageAsync(Message message);
+        Task<IEnumerable<ChatRoom>> CreateChatRoom(string name, string userId);
     }
 }

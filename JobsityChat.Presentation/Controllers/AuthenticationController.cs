@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobsityChat.Presentation.Controllers
 {
-    public class AuthenticationController : Controller
+    public class AuthenticationController : BaseController
     {
         public IActionResult Index()
         {

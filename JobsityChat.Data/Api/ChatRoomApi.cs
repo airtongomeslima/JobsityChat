@@ -53,6 +53,18 @@ namespace JobsityChat.Data.Api
             return result.OrderBy(c => c.PostDate).Take(50);
         }
 
+        public async Task<IEnumerable<ChatRoom>> CreateChatRoom(string name, string userId)
+        {
+            await uow.ChatRoomRepository.InsertAsync(new ChatRoomEntity
+            {
+                CreatorUserId = userId,
+                Title = name,
+                UsersCount = 0
+            });
+            
+            return await GetChatRooms();
+        }
+
         public async Task<IEnumerable<ChatRoom>> GetChatRooms()
         {
             var list = await uow.ChatRoomRepository.GetAllAsync();

@@ -10,20 +10,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace JobsityChat.Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ChatController : Controller
+    [Route("api/[controller]")]
+    public class ChatRoomMessageBoardController : BaseController
     {
         IChatRoomApi chatRoomApi;
 
-        public ChatController(IChatRoomApi chatRoomApi)
+        public ChatRoomMessageBoardController(IChatRoomApi chatRoomApi)
         {
             this.chatRoomApi = chatRoomApi;
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<ChatRoom>> GetChatRoomsAsync()
-        {
-            return await chatRoomApi.GetChatRooms();
         }
 
         [HttpGet("{chatRoomId}")]
@@ -36,6 +30,7 @@ namespace JobsityChat.Presentation.Controllers
         public async Task<IEnumerable<Message>> Post(Message post)
         {
             //TODO: get user info to fill userid
+
             return await chatRoomApi.SendMessageAsync(post);
         }
 
