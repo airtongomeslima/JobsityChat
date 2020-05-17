@@ -8,7 +8,7 @@ namespace JobsityChat.Test.Helpers
 {
     public interface IMockTestDatabase
     {
-        public Task<int> CreateUser();
+        public Task<string> CreateUser();
         public Task<ChatRoomEntity> CreateChatRoomAsync();
         public Task<IEnumerable<ChatRoomEntity>> CreateManyChatRoomAsync();
         public Task<IEnumerable<ChatRoomMessageEntity>> ChatRoomMessageBoardMockedDataAsync();

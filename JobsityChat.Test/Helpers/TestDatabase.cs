@@ -71,7 +71,7 @@ namespace JobsityChat.Test.Helpers
 
 
         #region Helpers
-     
+
         private static string FindIdentificationPropertie<T>()
         {
             var properties = typeof(T).GetProperties();
@@ -99,16 +99,21 @@ namespace JobsityChat.Test.Helpers
             script.AppendLine($"if not exists(select * from sysobjects where name = '{tableName}' and xtype = 'U')");
             script.AppendLine("\tCREATE TABLE [" + tableName + "]");
             script.AppendLine("\t(");
-            script.AppendLine("\t\t ID BIGINT,");
             for (int i = 0; i < fields.Count; i++)
             {
                 KeyValuePair<String, Type> field = fields[i];
 
 
-                if(field.Key == identificationField)
+                if (field.Key == identificationField)
                 {
-                    script.Append("\t\t" + field.Key + " int  IDENTITY(1,1) PRIMARY KEY");
-                } 
+                    if (dataMapper[field.Value] == "INT")
+                    {
+                        script.Append("\t\t" + field.Key + " int  IDENTITY(1,1) PRIMARY KEY");
+                    } else
+                    {
+                        script.Append("\t\t" + field.Key + " " + dataMapper[field.Value] + " PRIMARY KEY");
+                    }
+                }
                 else if (dataMapper.ContainsKey(field.Value))
                 {
                     script.Append("\t\t " + field.Key + " " + dataMapper[field.Value]);

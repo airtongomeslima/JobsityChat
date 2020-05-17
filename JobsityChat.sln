@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JobsityAuthentication", "Jo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JobsityBot", "JobsityBot", "{F0024573-EA2B-46B0-BB90-A02EFD7EE4E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.MessageBroker", "JobsityChat.MessageBroker\JobsityChat.MessageBroker.csproj", "{919FD8CF-419E-4B64-9795-1FCE984A8DE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChat.MessageBroker", "JobsityChat.MessageBroker\JobsityChat.MessageBroker.csproj", "{919FD8CF-419E-4B64-9795-1FCE984A8DE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChat.Authentication", "JobsityChat.Authentication\JobsityChat.Authentication.csproj", "{6C82C0A7-9A3E-4F4B-8F9B-5E8C0E279BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{919FD8CF-419E-4B64-9795-1FCE984A8DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{919FD8CF-419E-4B64-9795-1FCE984A8DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{919FD8CF-419E-4B64-9795-1FCE984A8DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C82C0A7-9A3E-4F4B-8F9B-5E8C0E279BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C82C0A7-9A3E-4F4B-8F9B-5E8C0E279BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C82C0A7-9A3E-4F4B-8F9B-5E8C0E279BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C82C0A7-9A3E-4F4B-8F9B-5E8C0E279BEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{6290AE2E-4313-42B8-9038-8F948923EC5E} = {2DE2D90B-149C-4A2D-BAB0-0F34DB6A7F18}
 		{85104D19-CA29-4C97-90CB-6E5E4D068CD9} = {F0024573-EA2B-46B0-BB90-A02EFD7EE4E8}
 		{919FD8CF-419E-4B64-9795-1FCE984A8DE7} = {F0024573-EA2B-46B0-BB90-A02EFD7EE4E8}
+		{6C82C0A7-9A3E-4F4B-8F9B-5E8C0E279BEA} = {CDC0B604-ABF9-474A-AC55-DA09B9BB1CF9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE94DDBB-CB31-4074-8D86-4528201B847C}

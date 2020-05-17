@@ -57,7 +57,7 @@ namespace JobsityChat.Test
         }
 
         [TestMethod]
-        public async Task GetQuote()
+        public void GetQuote()
         {
 
             using (IMessageBroker messageBroker = new MessageBroker.MessageBroker(address, port, user, password))

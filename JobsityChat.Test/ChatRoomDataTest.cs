@@ -22,7 +22,7 @@ namespace JobsityChat.Test
 
         private static ChatRoomEntity baseChatRoom = new ChatRoomEntity
         {
-            CreatorUserId = 2,
+            CreatorUserId = "2",
             Title = "Test ChatRoom",
             UsersCount = 0
         };

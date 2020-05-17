@@ -10,7 +10,7 @@ namespace JobsityChat.Domain.Entities
         [Description("id")]
         public int ChatRoomMessageId { get; set; }
         public int ChatRoomId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Message { get; set; }
         public DateTime PostDate { get; set; }
     }

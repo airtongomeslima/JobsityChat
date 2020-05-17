@@ -16,13 +16,13 @@ namespace JobsityChat.Test.Helpers
             this.testDatabase = testDatabase;
         }
 
-        public async Task<int> CreateUser()
+        public async Task<string> CreateUser()
         {
-            var iduser = await testDatabase.ExecuteScalarAsync<UserEntity>("User",
-      "INSERT INTO [USER] (Name,Email,Password) " +
-      "VALUES ('TestUser1', 'testuser1@mailinator.com', '123456'); SELECT CAST(SCOPE_IDENTITY() as int);");
+            var iduser = await testDatabase.ExecuteScalarAsync<AspNetUser>("AspNetUsers",
+      "INSERT INTO [AspNetUsers] ([Email],[EmailConfirmed],[PasswordHash],[SecurityStamp],[PhoneNumber],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEndDateUtc],[LockoutEnabled],[AccessFailedCount],[UserName]) " +
+      "VALUES ('testuser1@mailinator.com',0,'asdfasdfasdfasdf','565461651651','',0,0,NULL,0,0,'TestUser1'); SELECT CAST(SCOPE_IDENTITY() as nvarchar(200));");
 
-            return (int)iduser;
+            return (string)iduser;
         }
 
 
@@ -41,7 +41,7 @@ namespace JobsityChat.Test.Helpers
 
             var chatRoomId = await testDatabase.ExecuteScalarAsync<ChatRoomEntity>("ChatRoom",
                     "INSERT INTO ChatRoom (CreatorUserId,Title,UsersCount) " +
-                    $"VALUES ({chatRoom.CreatorUserId.ToString()},'{chatRoom.Title}',{chatRoom.UsersCount}); SELECT CAST(SCOPE_IDENTITY() as int);");
+                    $"VALUES ('{chatRoom.CreatorUserId.ToString()}','{chatRoom.Title}',{chatRoom.UsersCount}); SELECT CAST(SCOPE_IDENTITY() as int);");
 
             chatRoom.ChatRoomId = (int)chatRoomId;
 
@@ -64,7 +64,7 @@ namespace JobsityChat.Test.Helpers
             {
                 var chatRoomId = await testDatabase.ExecuteScalarAsync<ChatRoomEntity>("ChatRoom",
                         "INSERT INTO ChatRoom (CreatorUserId,Title,UsersCount) " +
-                        $"VALUES ({value.CreatorUserId.ToString()},'{value.Title}',{value.UsersCount}); SELECT CAST(SCOPE_IDENTITY() as int);");
+                        $"VALUES ('{value.CreatorUserId.ToString()}','{value.Title}',{value.UsersCount}); SELECT CAST(SCOPE_IDENTITY() as int);");
 
                 value.ChatRoomId = (int)chatRoomId;
             }
@@ -91,7 +91,7 @@ namespace JobsityChat.Test.Helpers
             {
                 var chatRoomMessageId = await testDatabase.ExecuteScalarAsync<ChatRoomMessageEntity>("ChatRoomMessage",
                         "INSERT INTO ChatRoomMessage (ChatRoomId,UserId,Message,PostDate) " +
-                        $"VALUES ({value.ChatRoomId},{value.UserId},'{value.Message}','{value.PostDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}'); SELECT CAST(SCOPE_IDENTITY() as int);");
+                        $"VALUES ({value.ChatRoomId},'{value.UserId}','{value.Message}','{value.PostDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}'); SELECT CAST(SCOPE_IDENTITY() as int);");
 
                 value.ChatRoomMessageId = (int)chatRoomMessageId;
             }
