@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    console.log(this.loginModel);
     this.authenticationService.Login(this.loginModel).pipe(take(1)).subscribe(r => {
       if (r.success) {
         this.authenticationService.setUser(r.response);

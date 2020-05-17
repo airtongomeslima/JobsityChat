@@ -69,7 +69,6 @@ export class BaseService {
   }
 
   public getMultipleOptions<T>(options: number[], endpoint: string): Observable<T> {
-    console.log('options', endpoint, options);
     return this.httpClient.get(`${this.url}/${endpoint}/${options.join('/')}`, this.options).pipe(
       map((data: any) => {
         const result = data as BaseResponseModel<T>;
