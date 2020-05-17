@@ -75,7 +75,7 @@ namespace JobsityChat.Test
 
                         client.BaseAddress = new Uri(baseAddress);
 
-                        var result = await client.PostAsync("api/Account/Register", content);
+                        var result = await client.PostAsync("token", content);
 
                         string resultContent = await result.Content.ReadAsStringAsync();
 
