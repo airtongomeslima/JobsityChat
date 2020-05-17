@@ -1,0 +1,18 @@
+<div class="incoming_msg" *ngIf="isIn">
+  <div class="incoming_msg_img">
+    <img src="https://picsum.photos/100/100" alt="sunil" />
+  </div>
+  <div class="received_msg">
+    <div class="received_withd_msg">
+      <p>{{userName}} says: {{text}}</p>
+      <span class="time_date"> {{date | date :'shortTime'}} | {{date | date :'longDate'}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="outgoing_msg" *ngIf="!isIn">
+  <div class="sent_msg">
+    <p>{{text}}</p>
+    <span class="time_date"> {{date | date :'shortTime'}} | {{date | date :'longDate'}}</span>
+  </div>
+</div>
