@@ -54,5 +54,61 @@ namespace JobsityChat.Test
                 Assert.Fail(e.Message);
             }
         }
+
+        [TestMethod]
+        public async Task Authenticate()
+        {
+            try
+            {
+                var token = "";
+                var data = new Dictionary<string, string>();
+                data.Add("grant_type", "password");
+                data.Add("username", "testuser@mailinator.com");
+                data.Add("password", "@Ai123456789");
+
+                using (var client = new HttpClient())
+                {
+                    using (var content = new FormUrlEncodedContent(data))
+                    {
+                        content.Headers.Clear();
+                        content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+                        client.BaseAddress = new Uri(baseAddress);
+
+                        var result = await client.PostAsync("api/Account/Register", content);
+
+                        string resultContent = await result.Content.ReadAsStringAsync();
+
+                        if (result.StatusCode != HttpStatusCode.OK)
+                        {
+                            Assert.Fail(resultContent);
+                        }
+
+                        token = resultContent;
+                    }
+                }
+
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(baseAddress);
+                    client.DefaultRequestHeaders.Authorization = 
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);             
+                    var result = await client.GetAsync("api/values");
+
+                    string resultContent = await result.Content.ReadAsStringAsync();
+
+                    if (result.StatusCode != HttpStatusCode.OK)
+                    {
+                        Assert.Fail(resultContent);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
     }
 }
