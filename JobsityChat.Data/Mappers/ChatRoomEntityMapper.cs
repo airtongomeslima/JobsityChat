@@ -7,14 +7,14 @@ using System.Text;
 
 namespace JobsityChat.Domain.Mappers
 {
-    public class ChatRoomEntityMapper : IMapper<IEnumerable<ChatRoom>, IEnumerable<ChatRoomEntity>>
+    public class ChatRoomEntityMapper : IMapper<IEnumerable<ChatRoomEntity>, IEnumerable<ChatRoom>>
     {
-        public IEnumerable<ChatRoomEntity> MapFrom(IEnumerable<ChatRoom> input)
+        public IEnumerable<ChatRoom> MapFrom(IEnumerable<ChatRoomEntity> input)
         {
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
 
-            return input.Select(c => new ChatRoomEntity
+            return input.Select(c => new ChatRoom
             {
                 ChatRoomId = c.ChatRoomId,
                 Title = c.Title,

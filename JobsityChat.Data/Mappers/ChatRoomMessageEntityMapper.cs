@@ -7,18 +7,18 @@ using System.Text;
 
 namespace JobsityChat.Domain.Mappers
 {
-    public class ChatRoomMessageEntityMapper : IMapper<IEnumerable<Message>, IEnumerable<ChatRoomMessageEntity>>
+    public class ChatRoomMessageEntityMapper : IMapper<IEnumerable<ChatRoomMessageEntity>, IEnumerable<Message>>
     {
-        public IEnumerable<ChatRoomMessageEntity> MapFrom(IEnumerable<Message> input)
+        public IEnumerable<Message> MapFrom(IEnumerable<ChatRoomMessageEntity> input)
         {
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
 
-            return input.Select(c => new ChatRoomMessageEntity
+            return input.Select(c => new Message
             {
                 UserId = c.UserId,
                 ChatRoomId = c.ChatRoomId,
-                Message = c.Text,
+                Text = c.Message,
                 PostDate = c.PostDate
             });
         }
