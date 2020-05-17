@@ -5,19 +5,24 @@ using System.Threading.Tasks;
 using JobsityChat.Domain.Api;
 using JobsityChat.Domain.Entities;
 using JobsityChat.Domain.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace JobsityChat.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize()]
     public class ChatRoomMessageBoardController : BaseController
     {
         IChatRoomApi chatRoomApi;
+        IConfiguration configuration;
 
-        public ChatRoomMessageBoardController(IChatRoomApi chatRoomApi)
+        public ChatRoomMessageBoardController(IChatRoomApi chatRoomApi, IConfiguration configuration)
         {
             this.chatRoomApi = chatRoomApi;
+            this.configuration = configuration;
         }
 
         [HttpGet("{chatRoomId}")]
@@ -29,7 +34,8 @@ namespace JobsityChat.Presentation.Controllers
         [HttpPost]
         public async Task<IEnumerable<Message>> Post(Message post)
         {
-            //TODO: get user info to fill userid
+            post.UserId = GetCurrentUserId(configuration);
+            post.UserName = GetCurrentUserName(configuration);
 
             return await chatRoomApi.SendMessageAsync(post);
         }

@@ -45,6 +45,11 @@ namespace JobsityChat.Presentation.Helpers
             }
 
             var username = user.UserName;
+            if(string.IsNullOrEmpty(username))
+            {
+                return await Task.FromResult(AuthenticateResult.Fail($"User not found"));
+            }
+
             var claims = new[] {
                     new Claim(ClaimTypes.NameIdentifier, username),
                     new Claim(ClaimTypes.Name, username),

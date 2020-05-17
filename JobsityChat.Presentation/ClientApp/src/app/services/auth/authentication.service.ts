@@ -14,16 +14,21 @@ export class AuthenticationService {
   constructor(private baseService: BaseService) { }
 
   public Login(login: LoginModel): Observable<BaseResponseModel<AuthenticationModel>> {
-    console.log('initial')
-    return this.baseService.post<BaseResponseModel<AuthenticationModel>, LoginModel>(login, 'Authentication/Login');
+    this.cleanUser();
+    return this.baseService.post<AuthenticationModel, LoginModel>(login, 'Authentication/Login');
   }
 
   public Register(register: RegisterModel): Observable<BaseResponseModel<boolean>> {
-    return this.baseService.post<BaseResponseModel<boolean>, RegisterModel>(register, 'Authentication/Register');
+    this.cleanUser();
+    return this.baseService.post<boolean, RegisterModel>(register, 'Authentication/Register');
   }
 
   public setUser(authModel: AuthenticationModel) {
     this.baseService.setLocalStorage('currentUser', authModel.access_token);
+  }
+
+  public cleanUser() {
+    this.baseService.removeLocalStorage('currentUser');
   }
 
 }

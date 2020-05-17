@@ -37,6 +37,9 @@ export class BaseService {
     return localStorage.setItem(name, stringfiedObject);
   }
 
+  removeLocalStorage(name) {
+    return localStorage.removeItem(name);
+  }
 
   public post<T, T2>(item: T2, endpoint: string): Observable<BaseResponseModel<T>> {
     return this.httpClient.post<T>(`${this.url}/${endpoint}`, item, this.options).pipe(
