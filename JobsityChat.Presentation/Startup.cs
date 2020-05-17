@@ -1,5 +1,8 @@
 using JobsityChat.Data.Api;
 using JobsityChat.Domain.Api;
+using JobsityChat.Presentation.Helpers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,12 +25,21 @@ namespace JobsityChat.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddAuthentication(TokenAuth.DefaultScemeName)
+                .AddScheme<TokenAuth, MyCustomTokenAuthHandler>(
+                    TokenAuth.DefaultScemeName,
+                    opts => {
+                        opts.TokenHeaderName = "Authorization";
+                    }
+                );
 
             var conn = Configuration["ConnectionStrings:DefaultConnection"];
             var address = Configuration["RabbitMQ:Address"];
@@ -41,6 +53,7 @@ namespace JobsityChat.Presentation
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -61,12 +74,17 @@ namespace JobsityChat.Presentation
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
+
 
             app.UseSpa(spa =>
             {
@@ -80,6 +98,8 @@ namespace JobsityChat.Presentation
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+
         }
     }
 }
