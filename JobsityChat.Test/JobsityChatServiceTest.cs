@@ -64,7 +64,7 @@ namespace JobsityChat.Test
             {
                 try
                 {
-                    messageBroker.SendMessage("JobsityChatService", "quote", "amd.us");
+                    messageBroker.SendMessage("JobsityChatService", "quote", "amd.us\t1");
 
                 }
                 catch (Exception e)

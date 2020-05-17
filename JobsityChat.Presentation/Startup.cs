@@ -1,3 +1,5 @@
+using JobsityChat.Data.Api;
+using JobsityChat.Domain.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,14 @@ namespace JobsityChat.Presentation
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            var conn = Configuration["ConnectionStrings:DefaultConnection"];
+            var address = Configuration["RabbitMQ:Address"];
+            var port = Configuration["RabbitMQ:Port"];
+            var user = Configuration["RabbitMQ:UserName"];
+            var password = Configuration["RabbitMQ:Password"];
+
+            services.AddSingleton<IChatRoomApi>(new ChatRoomApi(conn, address, port, user, password));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

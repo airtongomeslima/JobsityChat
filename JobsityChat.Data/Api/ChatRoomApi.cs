@@ -18,22 +18,28 @@ namespace JobsityChat.Data.Api
         protected List<Message> botMessageList = new List<Message>();
         protected IUnitOfWork uow;
         protected static IMessageBroker messageBroker;
-        private int chatRoomId;
 
-        public ChatRoomApi(int chatRoomId, string connectionString, string mqHostName, string mqPort, string mqUserName, string mqPassword)
+        public ChatRoomApi(string connectionString, string mqHostName, string mqPort, string mqUserName, string mqPassword)
         {
             uow = new UnitOfWork.UnitOfWork(connectionString);
             messageBroker = new MessageBroker.MessageBroker(mqHostName, mqPort, mqUserName, mqPassword);
             messageBroker.Subscribe("JobsityChatServiceQuotes", "quote", (string message) =>
             {
-                botMessageList.Add(new Message
+                if(message.Contains("\t"))
                 {
-                    ChatRoomId = chatRoomId,
-                    PostDate = DateTime.Now,
-                    Text = message,
-                    UserId = "-1",
-                    UserName = "ChatBot"
-                });
+                    var messageContent = message.Split('\t');
+                    int.TryParse(messageContent[1], out var chatRoomId);
+
+                    botMessageList.Add(new Message
+                    {
+                        ChatRoomId = chatRoomId,
+                        PostDate = DateTime.Now,
+                        Text = messageContent[0],
+                        UserId = "-1",
+                        UserName = "ChatBot"
+                    });
+                }
+                
             });
         }
         public async Task<IEnumerable<Message>> GetChatRoomMessageBoardAsync(int chatRoomId)

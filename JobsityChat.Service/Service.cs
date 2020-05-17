@@ -44,10 +44,12 @@ namespace JobsityChat.Service
                         "quote",
                         (string message) =>
                         {
-                            var result = GetQuotes(message);
+                            var code = message.Split('\t')[0];
+                            var chatRoomId = message.Split('\t')[1];
+                            var result = GetQuotes(code);
                             foreach (var item in result)
                             {
-                                var text = $"{item.Symbol.ToUpper()} quote is ${item.Close} per share";
+                                var text = $"{item.Symbol.ToUpper()} quote is ${item.Close} per share.\t{chatRoomId}";
                                 messageBroker.SendMessage("JobsityChatServiceQuotes", "quote", text);
                             }
                         });
