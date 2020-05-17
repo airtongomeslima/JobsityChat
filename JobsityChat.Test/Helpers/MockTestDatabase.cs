@@ -18,11 +18,12 @@ namespace JobsityChat.Test.Helpers
 
         public async Task<string> CreateUser()
         {
-            var iduser = await testDatabase.ExecuteScalarAsync<AspNetUser>("AspNetUsers",
-      "INSERT INTO [AspNetUsers] ([Email],[EmailConfirmed],[PasswordHash],[SecurityStamp],[PhoneNumber],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEndDateUtc],[LockoutEnabled],[AccessFailedCount],[UserName]) " +
-      "VALUES ('testuser1@mailinator.com',0,'asdfasdfasdfasdf','565461651651','',0,0,NULL,0,0,'TestUser1'); SELECT CAST(SCOPE_IDENTITY() as nvarchar(200));");
+            var iduser = Guid.NewGuid();
+            await testDatabase.ExecuteScalarAsync<AspNetUser>("AspNetUsers",
+      "INSERT INTO [AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash],[SecurityStamp],[PhoneNumber],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEndDateUtc],[LockoutEnabled],[AccessFailedCount],[UserName]) " +
+      "VALUES ('" + iduser + "','testuser1@mailinator.com',0,'asdfasdfasdfasdf','565461651651','',0,0,NULL,0,0,'TestUser1');");
 
-            return (string)iduser;
+            return iduser.ToString();
         }
 
 
