@@ -8,5 +8,6 @@ namespace JobsityChat.Domain.UnitOfWork
     {
         IGenericRepository<ChatRoomEntity> ChatRoomRepository { get; }
         IGenericRepository<ChatRoomMessageEntity> ChatRoomMessageRepository { get; }
+        IGenericRepository<AspNetUser> UsersRepository { get; }
     }
 }

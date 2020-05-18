@@ -1,4 +1,4 @@
-export class RegisterModel {
+export class MessageModel {
     userId: string;
     chatRoomId: number;
     userName: string;

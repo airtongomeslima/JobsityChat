@@ -26,7 +26,7 @@ namespace JobsityChat.Presentation.Controllers
 
         }
 
-        public string GetCurrentUserId(IConfiguration configuration)
+        protected string GetCurrentUserId(IConfiguration configuration)
         {
             if (user == null)
             {
@@ -35,7 +35,7 @@ namespace JobsityChat.Presentation.Controllers
             return user.UserId;
         }
 
-        public string GetCurrentUserName(IConfiguration configuration)
+        protected string GetCurrentUserName(IConfiguration configuration)
         {
             if (user == null)
             {
@@ -45,7 +45,7 @@ namespace JobsityChat.Presentation.Controllers
             return user.UserName;
         }
 
-        public bool IsValidEmail(string email)
+        protected bool IsValidEmail(string email)
         {
             try
             {

@@ -15,6 +15,7 @@ namespace JobsityChat.Data.UnitOfWork
         private readonly string connectionString;
         private IGenericRepository<ChatRoomEntity> chatRoomRepository;
         private IGenericRepository<ChatRoomMessageEntity> chatRoomMessageRepository;
+        private IGenericRepository<AspNetUser> usersRepository;
 
         public UnitOfWork(string connectionString)
         {
@@ -44,6 +45,19 @@ namespace JobsityChat.Data.UnitOfWork
                 }
 
                 return chatRoomMessageRepository;
+            }
+        }
+
+        public IGenericRepository<AspNetUser> UsersRepository
+        {
+            get
+            {
+                if (usersRepository == null)
+                {
+                    usersRepository = new GenericRepository<AspNetUser>("AspNetUser", connectionString);
+                }
+
+                return usersRepository;
             }
         }
     }

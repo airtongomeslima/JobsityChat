@@ -1,5 +1,5 @@
 <div class="container">
-  <h3 class="text-center">Messaging</h3>
+  <h3 class="text-center">ChatRoom: {{chatRoom.title}}</h3>
   <div class="messaging">
     <div class="inbox_msg">
       <div class="inbox_people">
@@ -9,9 +9,9 @@
           </div>
           <div class="srch_bar">
             <div class="stylish-input-group">
-              <input type="text" class="search-bar" placeholder="newChatRoom" />
+              <input type="text" class="search-bar" [(ngModel)]="newChatRoomTitle" placeholder="newChatRoom" />
               <span class="input-group-addon">
-                <button type="button">
+                <button type="button" (click)="createChatRoom()">
                   <fa-icon [icon]="faPlus"></fa-icon>
                 </button>
               </span>
@@ -19,18 +19,20 @@
           </div>
         </div>
         <div class="inbox_chat">
-          <app-chat-room [id]="0" [name]="'ChatRoom1'" [users]="10"></app-chat-room>
+          <app-chat-room [id]="chatRoom.chatRoomId" [name]="chatRoom.title" [users]="chatRoom.usersCount"
+            *ngFor="let chatRoom of chatRoomlist" (click)="selectChatRoom(chatRoom.chatRoomId)"></app-chat-room>
         </div>
       </div>
       <div class="mesgs">
         <div class="msg_history">
-          <app-message [userName]="'user 1'" [isIn]="true" [text]="'test text'" [date]="'2020-15-05 13:00PM'">
+          <app-message [userName]="message.userName" [isIn]="false" [text]="message.text" [date]="message.postDate"
+            *ngFor="let message of chatRoomMessages">
           </app-message>
         </div>
         <div class="type_msg">
           <div class="input_msg_write">
-            <input type="text" class="write_msg" placeholder="Type a message" />
-            <button class="msg_send_btn" type="button">
+            <input type="text" class="write_msg" [(ngModel)]="newMessage" placeholder="Type a message" />
+            <button class="msg_send_btn" type="button" (click)="sendMessage()">
               <fa-icon [icon]="faPaperPlane"></fa-icon>
             </button>
           </div>

@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace JobsityChat.Data.Api
 {
-    public class ChatRoomApi : IChatRoomApi
+    public class ChatRoomApi : IChatRoomApi, IDisposable
     {
         protected List<Message> botMessageList = new List<Message>();
         protected IUnitOfWork uow;
@@ -23,9 +23,10 @@ namespace JobsityChat.Data.Api
         {
             uow = new UnitOfWork.UnitOfWork(connectionString);
             messageBroker = new MessageBroker.MessageBroker(mqHostName, mqPort, mqUserName, mqPassword);
+
             messageBroker.Subscribe("JobsityChatServiceQuotes", "quote", (string message) =>
             {
-                if(message.Contains("\t"))
+                if (message.Contains("\t"))
                 {
                     var messageContent = message.Split('\t');
                     int.TryParse(messageContent[1], out var chatRoomId);
@@ -34,13 +35,15 @@ namespace JobsityChat.Data.Api
                     {
                         ChatRoomId = chatRoomId,
                         PostDate = DateTime.Now,
-                        Text = messageContent[0],
+                        Text = "ChatBot says: " + messageContent[0],
                         UserId = "-1",
                         UserName = "ChatBot"
                     });
                 }
-                
+
             });
+
+
         }
         public async Task<IEnumerable<Message>> GetChatRoomMessageBoardAsync(int chatRoomId)
         {
@@ -61,7 +64,7 @@ namespace JobsityChat.Data.Api
                 Title = name,
                 UsersCount = 0
             });
-            
+
             return await GetChatRooms();
         }
 
@@ -81,23 +84,28 @@ namespace JobsityChat.Data.Api
 
                 Regex regex = new Regex(pattern);
 
-                Match match = regex.Match(message.Text);
+                Match match = regex.Match(message.Text + " ");
 
                 if (match.Success)
                 {
-                    messageBroker.SendMessage("JobsityChatService", "quote", match.Value.ToLower().Replace(" ", ""));
+                    messageBroker.SendMessage("JobsityChatService", "quote", match.Value.ToLower().Replace(" ", "") + "\t" + message.ChatRoomId);
                 }
             }
 
             await uow.ChatRoomMessageRepository.InsertAsync(new ChatRoomMessageEntity
             {
                 ChatRoomId = message.ChatRoomId,
-                Message = message.Text,
+                Message = message.UserName + " says: " + message.Text,
                 UserId = message.UserId,
                 PostDate = DateTime.Now
             });
 
             return await GetChatRoomMessageBoardAsync(message.ChatRoomId);
+        }
+
+        public void Dispose()
+        {
+            messageBroker.Dispose();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JobsityChat.Domain.Api;
 using JobsityChat.Domain.Entities;
 using JobsityChat.Domain.UnitOfWork;
+using JobsityChat.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -26,18 +27,52 @@ namespace JobsityChat.Presentation.Controllers
         }
 
         [HttpGet("{chatRoomId}")]
-        public async Task<IEnumerable<Message>> GetChatRoomMessageBoardAsync(int chatRoomId)
+        public async Task<BaseResponseModel<IEnumerable<Message>>> GetMessages(int chatRoomId)
         {
-            return await chatRoomApi.GetChatRoomMessageBoardAsync(chatRoomId);
+            IEnumerable<Message> result;
+            try
+            {
+                result = await chatRoomApi.GetChatRoomMessageBoardAsync(chatRoomId);
+
+                return new BaseResponseModel<IEnumerable<Message>>
+                {
+                    Success = true,
+                    Response = result
+                };
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseModel<IEnumerable<Message>>
+                {
+                    Success = false
+                };
+            }
         }
 
         [HttpPost]
-        public async Task<IEnumerable<Message>> Post(Message post)
+        public async Task<BaseResponseModel<IEnumerable<Message>>> Post(Message post)
         {
-            post.UserId = GetCurrentUserId(configuration);
-            post.UserName = GetCurrentUserName(configuration);
+            IEnumerable<Message> result;
+            try
+            {
+                post.UserId = GetCurrentUserId(configuration);
+                post.UserName = GetCurrentUserName(configuration);
 
-            return await chatRoomApi.SendMessageAsync(post);
+                result = await chatRoomApi.SendMessageAsync(post);
+
+                return new BaseResponseModel<IEnumerable<Message>>
+                {
+                    Success = true,
+                    Response = result
+                };
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseModel<IEnumerable<Message>>
+                {
+                    Success = false
+                };
+            }
         }
 
     }

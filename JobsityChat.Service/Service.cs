@@ -47,11 +47,20 @@ namespace JobsityChat.Service
                             var code = message.Split('\t')[0];
                             var chatRoomId = message.Split('\t')[1];
                             var result = GetQuotes(code);
+
+
+                            if (result.Count == 0)
+                            {
+                                var text = $"Sorry, but there no quote avaliable for {code} at this moment.\t{chatRoomId}";
+                                messageBroker.SendMessage("JobsityChatServiceQuotes", "quote", text);
+                            }
+
                             foreach (var item in result)
                             {
                                 var text = $"{item.Symbol.ToUpper()} quote is ${item.Close} per share.\t{chatRoomId}";
                                 messageBroker.SendMessage("JobsityChatServiceQuotes", "quote", text);
                             }
+
                         });
 
                 }

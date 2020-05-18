@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JobsityChat.Domain.Api;
 using JobsityChat.Domain.Entities;
 using JobsityChat.Domain.UnitOfWork;
+using JobsityChat.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -27,18 +28,51 @@ namespace JobsityChat.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ChatRoom>> GetChatRoomsAsync()
+        public async Task<BaseResponseModel<IEnumerable<ChatRoom>>> GetChatRoomsAsync()
         {
-            return await chatRoomApi.GetChatRooms();
+            IEnumerable<ChatRoom> result;
+            try
+            {
+                result = await chatRoomApi.GetChatRooms();
+
+                return new BaseResponseModel<IEnumerable<ChatRoom>>
+                {
+                    Success = true,
+                    Response = result
+                };
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseModel<IEnumerable<ChatRoom>>
+                {
+                    Success = false
+                };
+            }
         }
 
         [HttpPost]
-        public async Task<IEnumerable<ChatRoom>> Post(string chatRoomName)
+        public async Task<BaseResponseModel<IEnumerable<ChatRoom>>> Post(ChatRoom newChatRoom)
         {
-            var accessToken = Request.Headers[HeaderNames.Authorization];
-            //TODO: get user info to fill userid
-            var userId = GetCurrentUserId(configuration);
-            return await chatRoomApi.CreateChatRoom(chatRoomName, userId);
+            IEnumerable<ChatRoom> result;
+            try
+            {
+                var accessToken = Request.Headers[HeaderNames.Authorization];
+                var userId = GetCurrentUserId(configuration);
+                result = await chatRoomApi.CreateChatRoom(newChatRoom.Title, userId);
+
+                return new BaseResponseModel<IEnumerable<ChatRoom>>
+                {
+                    Success = true,
+                    Response = result
+                };
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseModel<IEnumerable<ChatRoom>>
+                {
+                    Success = false
+                };
+            }
         }
 
     }
