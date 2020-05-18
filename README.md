@@ -1,6 +1,6 @@
 # JobsityChat
 
-To run the project follow the steps:
+### To run the project follow the steps:
 
 First of all change the App.Config inside the Jobsity.Service project to your RabbitMq server, if you don't have one you can install with this docker command:
 
@@ -12,13 +12,13 @@ After that change de appsettings.json of the projects Authentication and Present
 
 I tried to use different techniques to show some skills, but I think i overdid the project.
 
-Here is a video with the chat working: https://www.youtube.com/watch?v=4mOQDle3z_I
+ :thumbsup: Here is a video with the chat working: https://www.youtube.com/watch?v=4mOQDle3z_I
 
 What I would do later:
 
--Migrate everything to clean archtecture.
--Create installers in docker.
--Improve messages for the user.
--Refactor the authentication service.
--Added the message queue in the communication between the api's.
--Improve the front in general to make it more friendly and responsive.
+- Migrate everything to clean archtecture.
+- Create installers in docker.
+- Improve messages for the user.
+- Refactor the authentication service.
+- Added the message queue in the communication between the api's.
+- Improve the front in general to make it more friendly and responsive.
